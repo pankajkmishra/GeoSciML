@@ -38,7 +38,7 @@ Explore ML algorithms from basic regression to deep learning for geophysical app
 
 ## Download
 
-📚 [Download PDF Version](GeoSciML.pdf)
+
 
 ## Contributing
 
