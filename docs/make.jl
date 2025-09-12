@@ -8,31 +8,31 @@ using Random
 using LinearAlgebra
 using Statistics
 using Plots
-using tectonic_jll
+
+try
+    using tectonic_jll
+catch
+    @warn "tectonic_jll not available, PDF generation will be skipped"
+end
 
 function generate_pages()
-    
     codedir = joinpath(@__DIR__, "..", "code")
     srcdir  = joinpath(@__DIR__, "src")
     isdir(srcdir) || mkpath(srcdir)
 
-    
     for file in readdir(srcdir)
         if endswith(file, ".md") && file != "index.md"
             rm(joinpath(srcdir, file))
         end
     end
 
-    
     jl_files = sort([f for f in readdir(codedir) if endswith(f, ".jl")])
     for jl_file in jl_files
         Literate.markdown(joinpath(codedir, jl_file), srcdir; execute=true)
     end
 
-    
     md_files = sort([f for f in readdir(srcdir) if endswith(f, ".md") && f != "index.md"])
 
-    
     page_structure = Dict{String, Vector{Pair{String, String}}}()
     for file in md_files
         part_match = match(r"^(\d+)", file)
@@ -51,9 +51,7 @@ function generate_pages()
         end
     end
     
-    
     sorted_parts = sort(collect(keys(page_structure)), by = x -> parse(Int, split(x)[2]))
-    
     
     final_pages = Any["Home" => "index.md"]
     for part in sorted_parts
@@ -63,13 +61,15 @@ function generate_pages()
     return final_pages
 end
 
-
 pages = generate_pages()
 
 root_project_toml_path = joinpath(@__DIR__, "..", "Project.toml")
-root_project_toml = Pkg.TOML.parsefile(root_project_toml_path)
-project_version = get(root_project_toml, "version", "0.1.0")
-
+if isfile(root_project_toml_path)
+    root_project_toml = Pkg.TOML.parsefile(root_project_toml_path)
+    project_version = get(root_project_toml, "version", "0.1.0")
+else
+    project_version = "0.1.0"
+end
 
 htmldir = joinpath(@__DIR__, "build", "html")
 makedocs(
@@ -89,26 +89,42 @@ makedocs(
     clean = true,
 )
 
-
-pdfdir = joinpath(@__DIR__, "build", "pdf")
-makedocs(
-    root = @__DIR__,
-    source = "src",
-    build  = pdfdir,
-    sitename = "Geoscientific Machine Learning",
-    authors = "Pankaj K. Mishra",
-    version = project_version,
-    format = Documenter.LaTeX(platform = "tectonic"),
-    pages = pages,
-    clean = true,
-)
-
-
-pdf_path = joinpath(pdfdir, "documenter.pdf")
-if isfile(pdf_path)
-    cp(pdf_path, joinpath(htmldir, "GeoSciML.pdf"); force=true)
+pdf_generated = false
+if @isdefined(tectonic_jll)
+    try
+        pdfdir = joinpath(@__DIR__, "build", "pdf")
+        makedocs(
+            root = @__DIR__,
+            source = "src",
+            build  = pdfdir,
+            sitename = "Geoscientific Machine Learning",
+            authors = "Pankaj K. Mishra",
+            version = project_version,
+            format = Documenter.LaTeX(platform = "tectonic"),
+            pages = pages,
+            clean = true,
+        )
+        
+        pdf_path = joinpath(pdfdir, "documenter.pdf")
+        if isfile(pdf_path)
+            cp(pdf_path, joinpath(htmldir, "GeoSciML.pdf"); force=true)
+            pdf_generated = true
+            @info "PDF generated successfully at $(joinpath(htmldir, "GeoSciML.pdf"))"
+        end
+    catch e
+        @warn "PDF generation failed: $e"
+    end
+else
+    @info "Skipping PDF generation (tectonic_jll not available)"
 end
 
+if !pdf_generated
+    @info """
+    To generate PDF locally:
+    1. Install tectonic_jll: julia --project=docs -e 'using Pkg; Pkg.add("tectonic_jll")'
+    2. Run this script again: julia --project=docs docs/make.jl
+    """
+end
 
 deploydocs(
     repo = "github.com/pankajkmishra/GeoSciML.git",
