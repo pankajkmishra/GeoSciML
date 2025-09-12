@@ -8,6 +8,7 @@ using Random
 using LinearAlgebra
 using Statistics
 using Plots
+using tectonic_jll
 
 function generate_pages()
     
@@ -65,6 +66,10 @@ end
 
 pages = generate_pages()
 
+root_project_toml_path = joinpath(@__DIR__, "..", "Project.toml")
+root_project_toml = Pkg.TOML.parsefile(root_project_toml_path)
+project_version = get(root_project_toml, "version", "0.1.0")
+
 
 htmldir = joinpath(@__DIR__, "build", "html")
 makedocs(
@@ -73,10 +78,12 @@ makedocs(
     build  = htmldir,
     sitename = "Geoscientific Machine Learning",
     authors = "Pankaj K. Mishra",
+    version = project_version,
     format = Documenter.HTML(
         assets = ["assets/custom.css"],
         prettyurls = true,
-        canonical = "https://pankajkmishra.github.io/GeoSciML"
+        canonical = "https://pankajkmishra.github.io/GeoSciML",
+        inventory_version = project_version
     ),
     pages = pages,
     clean = true,
@@ -90,6 +97,7 @@ makedocs(
     build  = pdfdir,
     sitename = "Geoscientific Machine Learning",
     authors = "Pankaj K. Mishra",
+    version = project_version,
     format = Documenter.LaTeX(platform = "tectonic"),
     pages = pages,
     clean = true,

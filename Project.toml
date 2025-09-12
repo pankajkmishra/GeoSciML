@@ -1,0 +1,9 @@
+name = "GeoSciML"
+uuid = "a1b2c3d4-5678-90ab-cdef-123456789012"
+authors = ["Pankaj K. Mishra"]
+version = "0.1.0"
+
+[deps]
+
+[compat]
+julia = "1.10"
