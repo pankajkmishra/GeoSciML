@@ -9,20 +9,62 @@ using LinearAlgebra
 using Statistics
 using Plots
 
-codedir = joinpath(@__DIR__, "..", "code")
-srcdir  = joinpath(@__DIR__, "src")
-isdir(srcdir) || mkpath(srcdir)
+function generate_pages()
+    
+    codedir = joinpath(@__DIR__, "..", "code")
+    srcdir  = joinpath(@__DIR__, "src")
+    isdir(srcdir) || mkpath(srcdir)
 
-jlfiles = sort(filter(f -> endswith(f, ".jl"), readdir(codedir; join=true)))
-for jl in jlfiles
-    Literate.markdown(jl, srcdir; execute=true)
+    
+    for file in readdir(srcdir)
+        if endswith(file, ".md") && file != "index.md"
+            rm(joinpath(srcdir, file))
+        end
+    end
+
+    
+    jl_files = sort([f for f in readdir(codedir) if endswith(f, ".jl")])
+    for jl_file in jl_files
+        Literate.markdown(joinpath(codedir, jl_file), srcdir; execute=true)
+    end
+
+    
+    md_files = sort([f for f in readdir(srcdir) if endswith(f, ".md") && f != "index.md"])
+
+    
+    page_structure = Dict{String, Vector{Pair{String, String}}}()
+    for file in md_files
+        part_match = match(r"^(\d+)", file)
+        if part_match !== nothing
+            part_num = part_match.captures[1]
+            part_key = "Part " * string(parse(Int, part_num))
+            
+            if !haskey(page_structure, part_key)
+                page_structure[part_key] = []
+            end
+            
+            title_str = replace(splitext(file)[1], r"^\d+[a-z]_" => "")
+            title = join(titlecase.(split(title_str, '_')), " ")
+            
+            push!(page_structure[part_key], title => file)
+        end
+    end
+    
+    
+    sorted_parts = sort(collect(keys(page_structure)), by = x -> parse(Int, split(x)[2]))
+    
+    
+    final_pages = Any["Home" => "index.md"]
+    for part in sorted_parts
+        push!(final_pages, part => page_structure[part])
+    end
+    
+    return final_pages
 end
 
-pages = begin
-    idx = ["index.md"]
-    gens = sort(filter(f -> endswith(f, ".md") && f != "index.md", readdir(srcdir)))
-    vcat(idx, gens)
-end
+
+pages = generate_pages()
+
 
 htmldir = joinpath(@__DIR__, "build", "html")
 makedocs(
@@ -36,23 +78,10 @@ makedocs(
         prettyurls = true,
         canonical = "https://pankajkmishra.github.io/GeoSciML"
     ),
-    pages = [
-        "Home" => "index.md",
-        "Part I: Julia Foundations" => [
-            "Julia Basics" => "01a_julia_basics.md",
-            "Arrays & Linear Algebra" => "01b_arrays_linalg.md",
-        ],
-        "Part II: Data & Visualization" => [
-            "Data Loading" => "02a_data_loading.md",
-            "Visualization" => "02b_visualization.md",
-        ],
-        "Part III: Machine Learning" => [
-            "ML Fundamentals" => "03a_ml_fundamentals.md",
-            "Geophysical Applications" => "03b_geophysical_example.md",
-        ],
-    ],
+    pages = pages,
     clean = true,
 )
+
 
 pdfdir = joinpath(@__DIR__, "build", "pdf")
 makedocs(
@@ -66,8 +95,12 @@ makedocs(
     clean = true,
 )
 
-pdf = joinpath(pdfdir, "documenter.pdf")
-isfile(pdf) && cp(pdf, joinpath(htmldir, "GeoSciML.pdf"); force=true)
+
+pdf_path = joinpath(pdfdir, "documenter.pdf")
+if isfile(pdf_path)
+    cp(pdf_path, joinpath(htmldir, "GeoSciML.pdf"); force=true)
+end
+
 
 deploydocs(
     repo = "github.com/pankajkmishra/GeoSciML.git",
