@@ -1,5 +1,6 @@
 using LinearAlgebra
 using Random
+using Statistics
 Random.seed!(42)
 
 seismic_trace = randn(1000)

@@ -4,6 +4,10 @@ Pkg.instantiate()
 
 using Documenter
 using Literate
+using Random
+using LinearAlgebra
+using Statistics
+using Plots
 
 codedir = joinpath(@__DIR__, "..", "code")
 srcdir  = joinpath(@__DIR__, "src")
