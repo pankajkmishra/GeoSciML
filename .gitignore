@@ -1,13 +1,24 @@
+# Julia artifacts
+Manifest.toml
 *.jl.*.cov
 *.jl.cov
 *.jl.mem
+
+# Books.jl build outputs
+_gen/
+_build/
+
+# System files
 .DS_Store
-/Manifest.toml
-/docs/build/
-/docs/Manifest.toml
-/docs/src/*.md
-!docs/src/index.md
+Thumbs.db
+
+# Editor files
 .vscode/
+.idea/
 *.swp
 *.swo
 *~
+
+# Temporary files
+*.tmp
+*.temp

@@ -1,44 +1,58 @@
-# Geoscientific Machine Learning 
-.
+# Geoscientific Machine Learning & AI with Julia
 
-A modern approach to machine learning in geosciences using Julia.
+A comprehensive book on machine learning and artificial intelligence applications in geosciences using the Julia programming language.
 
-[![Build & Deploy Book](https://github.com/pankajkmishra/GeoSciML/actions/workflows/docs.yml/badge.svg)](https://github.com/pankajkmishra/GeoSciML/actions/workflows/docs.yml)
-[![Documentation](https://img.shields.io/badge/docs-stable-blue.svg)](https://pankajkmishra.github.io/GeoSciML/)
+[![Book](https://img.shields.io/badge/book-online-blue.svg)](https://pankajkmishra.github.io/GeoSciML/)
 
 ## About
 
-This book demonstrates machine learning applications in geosciences 
+This book demonstrates how to apply machine learning and AI techniques to geoscientific problems using Julia. It covers fundamental programming concepts, data analysis techniques, and practical applications relevant to earth sciences.
 
-## Quick Start
+## Contents
 
-### Read Online
-- [HTML Documentation](https://pankajkmishra.github.io/GeoSciML/)
-- [PDF Version](https://pankajkmishra.github.io/GeoSciML/GeoSciML.pdf)
+- **Chapter 1**: Julia Fundamentals - Core programming concepts and syntax
+- **Chapter 2**: Arrays & Visualization - Data manipulation and plotting techniques
+- **Future chapters**: Advanced ML/AI applications in geosciences
 
-### Build Locally
+## Building the Book
+
+### Prerequisites
+
+- Julia 1.9+ 
+- Books.jl package
+
+### Local Development
+
+To serve the book locally with live reloading:
 
 ```bash
-git clone https://github.com/pankajkmishra/GeoSciML.git
-cd GeoSciML
-julia --project=docs -e 'using Pkg; Pkg.instantiate(); include("docs/make.jl")'
+julia --project -e 'using Books; Books.serve()'
 ```
 
-### Add New Chapters
+The book will be available at `http://localhost:8004` (or the port specified in `config.toml`).
 
-1. Create Julia scripts in `code/` directory
-2. Use Literate.jl comment syntax for documentation
-3. Push to main branch - GitHub Actions will rebuild automatically
+### Static Build
 
-## Prerequisites
+To build static HTML and PDF versions:
 
-- Julia 1.10+
-- Git
+```bash
+julia --project -e 'using Books; Books.build()'
+```
 
-## License
+The output will be generated in the `_build` directory.
 
-MIT License
+## Technology Stack
 
-## Author
+- **Books.jl**: Book generation and live serving
+- **Julia**: Programming language and execution environment  
+- **Pandoc**: Document conversion (handled automatically by Books.jl)
 
-Pankaj K. Mishra
+## Contributing
+
+Contributions are welcome! Please feel free to submit issues, suggestions, or pull requests.
+
+
+
+---
+
+*Built with ❤️ using [Books.jl](https://books.huijzer.xyz)*
