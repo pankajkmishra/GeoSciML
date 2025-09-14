@@ -6,11 +6,11 @@ Welcome to "Geoscientific Machine Learning & AI with Julia", a comprehensive gui
 
 This book covers:
 
-1. **[Julia Fundamentals](julia_fundamentals.html)** - Core programming concepts and syntax
+1. **[Julia Fundamentals](julia_fundamentals)** - Core programming concepts and syntax
    - Basic Programming Concepts
    - Functions and Control Flow
 
-2. **[Arrays & Visualization](arrays_visualization.html)** - Data manipulation and plotting techniques
+2. **[Arrays & Visualization](arrays_visualization)** - Data manipulation and plotting techniques
    - Arrays and Linear Algebra
    - Data Visualization
 

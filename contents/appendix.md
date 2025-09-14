@@ -9,7 +9,7 @@ For further learning about Julia programming and geoscientific applications:
 - [Julia Documentation](https://docs.julialang.org/)
 - [Julia for Data Science](https://juliadatascience.io/) 
 - [Julia Discourse Forum](https://discourse.julialang.org/)
-- [JuliaPhy](https://juliaphysics.github.io/) - Physics packages in Julia
+
 
 ## Example Function Definitions
 

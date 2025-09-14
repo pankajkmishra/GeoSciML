@@ -47,8 +47,9 @@ jobs:
             # Generate content with Julia code execution
             Books.gen()
             println("Content generation completed!")
-            # Build HTML and PDF outputs
-            Books.build_all()
+            # Build HTML and PDF outputs with URL prefix
+            Books.html(; url_prefix="/GeoSciML")
+            Books.pdf()
             println("Build completed successfully!")
           '
 

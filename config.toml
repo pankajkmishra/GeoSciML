@@ -9,9 +9,20 @@
 
   # Full URL, required for the sitemap and robots.txt.
   online_url = "https://pankajkmishra.github.io/GeoSciML"
+  
+  # URL prefix for GitHub Pages subdirectory
+  url_prefix = "/GeoSciML"
 
   # Extra directories to be copied.
-  extra_directories = []
+  extra_directories = ["assets"]
+
+  # Custom CSS for styling
+  extra_head = """
+  <link rel="stylesheet" href="assets/custom.css">
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="assets/custom.js"></script>
+  """
 
   # Port used by serve()
   port = 8004
