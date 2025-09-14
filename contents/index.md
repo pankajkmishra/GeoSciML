@@ -7,13 +7,15 @@ Welcome to "Geoscientific Machine Learning & AI with Julia", a comprehensive gui
 This book covers:
 
 1. **[Julia Fundamentals](julia_fundamentals.html)** - Core programming concepts and syntax
-2. **[Arrays & Visualization](arrays_visualization.html)** - Data manipulation and plotting techniques  
-3. **[About](about.html)** - Information about this book and its authors
+   - Basic Programming Concepts
+   - Functions and Control Flow
+
+2. **[Arrays & Visualization](arrays_visualization.html)** - Data manipulation and plotting techniques
+   - Arrays and Linear Algebra
+   - Data Visualization
 
 ## Getting Started
 
 Each chapter contains executable Julia code that you can run interactively. The book is designed to be both educational and practical, providing real-world examples relevant to geosciences.
-
-This website is also available as [**PDF**](/geosciml.pdf){target="_blank"}.
 
 
