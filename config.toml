@@ -18,10 +18,10 @@
 
   # Custom CSS for styling
   extra_head = """
-  <link rel="stylesheet" href="assets/custom.css">
-  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <link rel="stylesheet" href="/GeoSciML/assets/custom.css">
+  <link rel="icon" type="image/svg+xml" href="/GeoSciML/assets/favicon.svg">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <script src="assets/custom.js"></script>
+  <script src="/GeoSciML/assets/custom.js"></script>
   """
 
   # Port used by serve()
