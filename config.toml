@@ -3,26 +3,20 @@
   [projects.default]
   contents = [
     "index",
-    "julia_fundamentals", 
-    "arrays_visualization"
+    "julia_fundamentals",
+    "arrays_visualization",
   ]
 
-  # Full URL, required for the sitemap and robots.txt.
-  online_url = "https://pankajkmishra.github.io/GeoSciML"
-  
-  # URL prefix for GitHub Pages subdirectory
-  url_prefix = "/GeoSciML"
+  # Base domain (no path)
+  online_url = "https://pankajkmishra.github.io"
 
-  # Extra directories to be copied.
+  # GitHub Pages repo path
+  online_url_prefix = "/GeoSciML"
+
+  # Extra directories to be copied into _build/
   extra_directories = ["assets"]
 
-  # Custom CSS for styling
-  extra_head = """
-  <link rel="stylesheet" href="/GeoSciML/assets/custom.css">
-  <link rel="icon" type="image/svg+xml" href="/GeoSciML/assets/favicon.svg">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <script src="/GeoSciML/assets/custom.js"></script>
-  """
+
 
   # Port used by serve()
   port = 8004
