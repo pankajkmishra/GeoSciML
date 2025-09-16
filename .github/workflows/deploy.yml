@@ -36,28 +36,23 @@ jobs:
           julia --project=. -e '
             using Pkg
             Pkg.instantiate()
-            Pkg.precompile()
           '
 
       - name: Build book
         run: |
           julia --project=. -e '
             using Books
-            println("Starting Books.jl generation...")
-            # Generate content with Julia code execution
+            # Generate all Julia output and HTML
             Books.gen()
-            println("Content generation completed!")
-            # Build HTML and PDF outputs with URL prefix
-            Books.html(; url_prefix="/GeoSciML")
+            # Generate PDF
             Books.pdf()
-            println("Build completed successfully!")
           '
 
       - name: Verify build output
         run: |
           ls -la _build/
-          echo "Build directory contents:"
-          find _build -type f -name "*.html" | head -10
+          echo "Generated files:"
+          find _build -type f | head -20
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
