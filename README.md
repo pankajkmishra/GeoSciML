@@ -2,7 +2,7 @@
 
 A comprehensive book on machine learning and artificial intelligence applications in geosciences using the Julia programming language.
 
-[![Book](https://img.shields.io/badge/book-online-blue.svg)](https://pankajkmishra.github.io/GeoSciML/)
+[![Book](https://img.shields.io/badge/book-online-blue.svg)](https://pankajkmishra.github.io/GeoSciML)
 
 ## About
 
